@@ -8,11 +8,8 @@ int main(void) {
 
 void lush_loop() {
 	char *com = lush_input();
-	printf("after input!\n");
 	argsbuf *args = lush_parse(com);
-	printf("after parse!\n");
 	lush_exec(args);
-	printf("after exec!\n");
 }
 
 char *lush_input() {
@@ -46,6 +43,7 @@ argsbuf *lush_parse(char *com) {
 		} else {
 			arg[i++] = *com;
 		}
+		com++;
 	}
 
 	ab_append(ab, arg);
@@ -55,7 +53,7 @@ argsbuf *lush_parse(char *com) {
 }
 
 void lush_exec(argsbuf *args) {
-	pid_t pid, wpid;
+	pid_t pid;
 	int status;
 
 	pid = fork();
@@ -70,10 +68,7 @@ void lush_exec(argsbuf *args) {
 		perror("lsh");
 	} else {
 		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
+			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && ! WIFSIGNALED(status));
 	}
-
-	printf("WPID: %d\n", wpid);
-
 }
