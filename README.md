@@ -1,1 +1,1 @@
-# lush - Leonid Ushakov Shell
+# lush - LU Shell
