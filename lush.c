@@ -8,8 +8,11 @@ int main(void) {
 
 void lush_loop() {
 	char *com = lush_input();
+	printf("after input!\n");
 	argsbuf *args = lush_parse(com);
+	printf("after parse!\n");
 	lush_exec(args);
+	printf("after exec!\n");
 }
 
 char *lush_input() {
