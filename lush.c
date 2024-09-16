@@ -16,7 +16,7 @@ void lush_init() {
 	ui.hostname[1023] = 0;
 
 	getlogin_r(ui.username, 1023);
-	// gethostname(ui.hostname, 1023);
+	gethostname(ui.hostname, 1023);
 }
 
 void lush_loop() {
