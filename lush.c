@@ -8,8 +8,11 @@ int main(void) {
 
 void lush_loop() {
 	char *com = lush_input();
+	if (strcmp(com, "exit") == 0) exit(EXIT_SUCCESS);
 	argsbuf *args = lush_parse(com);
 	lush_exec(args);
+	ab_free(args);
+	free(com);
 }
 
 char *lush_input() {

@@ -18,6 +18,7 @@ void ab_append(argsbuf *ab, char *arg) {
 void ab_free(argsbuf *ab) {
     for (int i = 0; i < ab->len; i++) free(ab->args[i]);
     free(ab->args);
+    free(ab);
 }
 
 #endif

@@ -8,6 +8,9 @@ all: $(output)
 $(output): $(source)
 	$(cc) $(cflags) $< -o $@
 
+debug: $(source)
+	$(cc) $(cflags) -g $(source) -o $(output)
+
 clean:
 	rm -f $(output)
 
