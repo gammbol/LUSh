@@ -1,10 +1,22 @@
 #include "include/lush.h"
 
+userinfo ui = {};
+
+
 int main(void) {
+	lush_init();
 	printf("\033c");
 	printf("LUSh - L.U. Shell\n");
 	lush_loop();
 	return 0;
+}
+
+void lush_init() {
+	ui.username[1023] = 0;
+	ui.hostname[1023] = 0;
+
+	getlogin_r(ui.username, 1023);
+	// gethostname(ui.hostname, 1023);
 }
 
 void lush_loop() {
@@ -25,7 +37,7 @@ char *lush_input() {
 	char c;
 	char *com = malloc(BUFSIZE);
 
-	printf("$ ");
+	printf("[%s@%s]$ ", ui.username, ui.hostname);
 
 	// getting input from user
 	int i = 0;

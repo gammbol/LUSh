@@ -9,6 +9,12 @@
 
 #include "argsbuf.h"
 
+typedef struct userinfo {
+    char hostname[1024];
+    char username[1024];
+} userinfo;
+
+void lush_init();
 void lush_loop();
 char *lush_input();
 argsbuf *lush_parse(char *com);
