@@ -1,25 +1,31 @@
 #include "include/lush.h"
 
 int main(void) {
+	printf("\033c");
 	printf("LUSh - L.U. Shell\n");
 	lush_loop();
 	return 0;
 }
 
 void lush_loop() {
-	char *com = lush_input();
-	if (strcmp(com, "exit") == 0) exit(EXIT_SUCCESS);
-	argsbuf *args = lush_parse(com);
-	lush_exec(args);
-	ab_free(args);
-	free(com);
+	while (1) {
+		char *com = lush_input();
+		if (strcmp(com, "exit") == 0) {
+			free(com);
+			exit(EXIT_SUCCESS);
+		}
+		argsbuf *args = lush_parse(com);
+		lush_exec(args);
+		ab_free(args);
+		free(com);
+	}
 }
 
 char *lush_input() {
 	char c;
 	char *com = malloc(BUFSIZE);
 
-	printf("> ");
+	printf("$ ");
 
 	// getting input from user
 	int i = 0;
@@ -32,7 +38,7 @@ char *lush_input() {
 argsbuf *lush_parse(char *com) {
 	// argument buffer initialization
 	argsbuf *ab = malloc(sizeof(argsbuf));
-	memset(ab, 0, sizeof *ab);
+	memset(ab, 0, sizeof(*ab));
 
 	char *arg = malloc(BUFSIZE);
 	memset(arg, 0, BUFSIZE);
@@ -40,6 +46,7 @@ argsbuf *lush_parse(char *com) {
 	int i = 0;
 	while (*com) {
 		if (*com == ' ') {
+			arg[i] = 0;
 			ab_append(ab, arg);
 			memset(arg, 0, BUFSIZE);
 			i = 0;
@@ -49,6 +56,7 @@ argsbuf *lush_parse(char *com) {
 		com++;
 	}
 
+	arg[i] = 0;
 	ab_append(ab, arg);
 	free(arg);
 
