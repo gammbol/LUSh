@@ -11,8 +11,9 @@ typedef struct argsbuf {
 
 void ab_append(argsbuf *ab, char *arg) {
     ab->args = (char**)realloc(ab->args, sizeof(char*) * ++(ab->len));
-    ab->args[ab->len - 1] = (char*)malloc(strlen(arg));
-    strcpy(ab->args[ab->len-1], arg);
+    ab->args[ab->len - 1] = (char*)calloc(strlen(arg), sizeof(char));
+    memcpy(ab->args[ab->len - 1], arg, strlen(arg)); // left memcpy, 'cause it's cooler :)
+    // strcpy(ab->args[ab->len-1], arg);
 }
 
 void ab_free(argsbuf *ab) {
